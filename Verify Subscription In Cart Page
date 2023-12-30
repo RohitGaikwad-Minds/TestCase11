@@ -1,0 +1,48 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SubscriptionTest {
+    public static void main(String[] args) {
+        // Set the path to your ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "path_to_chromedriver.exe");
+
+        // Instantiate ChromeDriver
+        WebDriver driver = new ChromeDriver();
+
+        // Navigate to the website
+        driver.get("https://automationexercise.com/");
+
+        // Add a product to the cart
+        WebElement addToCartButton = driver.findElement(By.xpath("//button[contains(text(), 'Add to Cart')]"));
+        addToCartButton.click();
+
+        // Navigate to the cart page
+        WebElement cartLink = driver.findElement(By.xpath("//a[@href='/cart']"));
+        cartLink.click();
+
+        // Find the subscription input field on the cart page and enter a valid email address
+        WebElement subscriptionInput = driver.findElement(By.name("email"));
+        subscriptionInput.sendKeys("example@example.com");
+
+        // Submit the subscription form
+        subscriptionInput.submit();
+
+        // Wait for the subscription confirmation message to appear (you can use explicit wait if necessary)
+
+        // Find the subscription confirmation message element and perform assertions or verifications
+        WebElement confirmationMessage = driver.findElement(By.xpath("//div[@class='alert alert-success']"));
+        String expectedMessage = "Thank you for subscribing!";
+        String actualMessage = confirmationMessage.getText();
+
+        if (actualMessage.equals(expectedMessage)) {
+            System.out.println("Subscription in Cart page is successful.");
+        } else {
+            System.out.println("Subscription in Cart page is not successful.");
+        }
+
+        // Close the browser
+        driver.quit();
+    }
+}
